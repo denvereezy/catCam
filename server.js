@@ -58,6 +58,9 @@ board.on('ready', () => {
                 exit_code: code,
                 time_stamp: timestamp
             };
+            if((/jpg$/).test(filename)) {
+              data.file_path = __dirname + '/' + filename;
+            }
             picService.upload(data);
         });
     });

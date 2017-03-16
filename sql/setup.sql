@@ -9,5 +9,6 @@ create table pics (
   id int not null primary key auto_increment,
   filename varchar(100) not null,
   exit_code varchar(100),
-  time_stamp varchar(100)
+  time_stamp varchar(100),
+  file_path varchar(100)
 );
