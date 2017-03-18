@@ -26,7 +26,7 @@ board.on('ready', () => {
     console.log('board ready');
 
     const motion = new five.Motion('P1-7'),
-          led = new five.Led('P1-11');
+          led    = new five.Led('P1-11');
 
     motion.on('calibrated', () => {
         console.log('calibrated');
@@ -39,9 +39,9 @@ board.on('ready', () => {
         let filename = 'image_' + i + '.jpg';
         let args = [
             '-w',
-            '320',
+            '365',
             '-h',
-            '240',
+            '365',
             '-o',
             filename,
             '-t',
@@ -58,19 +58,22 @@ board.on('ready', () => {
                 exit_code: code,
                 time_stamp: timestamp
             };
-            if((/jpg$/).test(filename)) {
-              data.file_path = __dirname + '/' + filename;
+            if ((/jpg$/).test(filename)) {
+                let command = 'mv ' + filename + ' public/img/';
+                childProcess.exec(command, (error, stdout, stderr) => {
+                    data.file_path = 'img/ ' + filename;
+                });
             }
             picService.upload(data);
         });
     });
 
     motion.on('motionend', () => {
-      led.off();
-      console.log('motion ended');
+        led.off();
+        console.log('motion ended');
     });
-  });
+});
 
 process.on('SIGINT', () => {
-  process.exit();
+    process.exit();
 });
