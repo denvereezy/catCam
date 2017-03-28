@@ -3,6 +3,7 @@ const mysql         = require('mysql'),
       five          = require('johnny-five'),
       raspi         = require('raspi-io'),
       child_process = require('child_process'),
+      fs            = require('fs'),
       PicService    = require('./services/picService'),
       board         = new five.Board({io: new raspi()});
 
@@ -59,10 +60,14 @@ board.on('ready', () => {
                 time_stamp: timestamp
             };
             if ((/jpg$/).test(filename)) {
-                let command = 'mv ' + filename + ' public/img/';
-                childProcess.exec(command, (error, stdout, stderr) => {
-                    data.file_path = 'img/ ' + filename;
-                });
+              let dir = 'public/img/';
+              if (!fs.existsSync(dir)){
+                fs.mkdirSync(dir);
+              }
+              let command = 'mv ' + filename + ' public/img/';
+              childProcess.exec(command, (error, stdout, stderr) => {
+                data.file_path = 'img/ ' + filename;
+              });
             }
             picService.upload(data);
         });
