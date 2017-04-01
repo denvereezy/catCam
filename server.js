@@ -65,7 +65,7 @@ board.on('ready', () => {
                 fs.mkdirSync(dir);
               }
               let command = 'mv ' + filename + ' public/img/';
-              childProcess.exec(command, (error, stdout, stderr) => {
+              child_process.exec(command, (error, stdout, stderr) => {
                 data.file_path = 'img/ ' + filename;
               });
             }
