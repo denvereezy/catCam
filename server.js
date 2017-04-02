@@ -66,6 +66,9 @@ board.on('ready', () => {
               }
               let command = 'mv ' + filename + ' public/img/';
               child_process.exec(command, (error, stdout, stderr) => {
+                if (error) {
+                  console.log(error);
+                }
                 data.file_path = 'img/ ' + filename;
               });
             }
